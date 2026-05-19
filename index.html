@@ -1,186 +1,124 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Sanal İstihbarat Terörle Mücadele</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C2D TERA</title>
+
 <style>
-    * { margin: 0; padding: 0; }
-    body {
-        font-family: "Courier New", monospace;
-        color: #00ffea;
-        overflow: hidden;
-        background: black;
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, Helvetica, sans-serif;
     }
 
-    /* 🇹🇷 Arka plan Türk Bayrağı */
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("TR-Turkey-Flag-icon.png");
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.35) blur(1px);
-        z-index: -2;
+    body{
+        width:100%;
+        height:100vh;
+        overflow:hidden;
+        background:black;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position:relative;
     }
 
-    /* Matrix yağmur */
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
+    /* Uzay Arkaplan */
+    body::before{
+        content:"";
+        position:absolute;
+        width:100%;
+        height:100%;
+        background:url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+        filter:brightness(0.5);
+        z-index:-2;
     }
 
-    /* 🔰 LOGO */
-    .logo {
-        position: absolute;
-        top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 150px;
-        opacity: 0.95;
-        filter: drop-shadow(0 0 15px #00ffee);
-        z-index: 10;
+    /* Yıldız Efekti */
+    body::after{
+        content:"";
+        position:absolute;
+        width:100%;
+        height:100%;
+        background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+        background-size:50px 50px;
+        background-position:0 0, 25px 25px;
+        opacity:0.4;
+        animation:stars 20s linear infinite;
+        z-index:-1;
     }
 
-    /* Orta yazı */
-    .center {
-        position: absolute;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        text-shadow: 0 0 12px #00ffee;
-        z-index: 10;
-    }
-
-    h1 {
-        font-size: 60px;
-    }
-
-    h3 {
-        margin-top: 10px;
-        font-size: 22px;
-    }
-
-    /* Instagram alanı */
-    .instagram {
-        position: fixed;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-        z-index: 10;
-    }
-
-    .instagram span {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 5px;
-        text-shadow: 0 0 8px #00ffee;
-    }
-
-    .instagram a {
-        color: #00ffea;
-        text-decoration: none;
-        font-size: 16px;
-        text-shadow: 0 0 10px #00ffee;
-        transition: 0.3s;
-    }
-
-    .instagram a:hover {
-        color: #ffffff;
-        text-shadow: 0 0 15px #ffffff;
-    }
-</style>
-</head>
-<body>
-
-<!-- 🎧 Müzik -->
-<audio id="music" src="music.mp3" loop></audio>
-
-<!-- Matrix -->
-<canvas id="matrix"></canvas>
-
-<!-- 🔰 LOGO -->
-<img src="tr-turkey-flag-icon.png" alt="TERA " class="logo">
-
-<div class="center">
-    <h1>Sanal İstihbarat Terörle Mücadele</h1>
-    <h3>• TERA</h3>
-</div>
-
-<!-- Instagram -->
-<div class="instagram">
-    <span>TERA</span>
-    <a href="https://www.instagram.com/tera.xd.q?igsh=Y3ZqaDgzZjh5dXdm" target="_blank">
-        instagram.com/tera.xd.q
-    </a>
-</div>
-
-<script>
-    // Müzik başlatıcı
-    document.addEventListener("click", function () {
-        const m = document.getElementById("music");
-        m.volume = 0.5;
-        m.play();
-    });
-
-    // MATRIX EFFECT
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
-
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#00ffea";
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
-                drops[i] = 0;
-            }
-            drops[i]++;
+    @keyframes stars{
+        from{
+            transform:translateY(0);
+        }
+        to{
+            transform:translateY(-100px);
         }
     }
 
-    setInterval(draw, 35);
+    h1{
+        color:#00bfff;
+        font-size:90px;
+        text-align:center;
+        letter-spacing:8px;
+        text-shadow:
+            0 0 10px #00bfff,
+            0 0 20px #00bfff,
+            0 0 40px #00bfff,
+            0 0 80px #00bfff;
+        animation:glitch 1s infinite;
+    }
 
-    window.onresize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    };
-</script>
+    @keyframes glitch{
+        0%{
+            transform:translate(0);
+        }
+        20%{
+            transform:translate(-2px,2px);
+        }
+        40%{
+            transform:translate(-2px,-2px);
+        }
+        60%{
+            transform:translate(2px,2px);
+        }
+        80%{
+            transform:translate(2px,-2px);
+        }
+        100%{
+            transform:translate(0);
+        }
+    }
+
+    .line{
+        position:absolute;
+        width:100%;
+        height:2px;
+        background:#00bfff;
+        box-shadow:0 0 10px #00bfff;
+    }
+
+    .line.top{
+        top:35%;
+    }
+
+    .line.bottom{
+        bottom:35%;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="line top"></div>
+
+<h1>HACKED BY C2D TERA</h1>
+
+<div class="line bottom"></div>
 
 </body>
-</html> 
-<style>  
-/* 📸 Profil Fotoğrafı */
-.profil {
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    border-radius: 8px; /* köşeler hafif yuvarlak */
-    filter: grayscale(100%) drop-shadow(0 0 15px #00ffee);
-    z-index: 10;
-}
+</html>
